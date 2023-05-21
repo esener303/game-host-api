@@ -24,7 +24,6 @@ const gameSchema = {
 };
 
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -32,10 +31,9 @@ app.get('/', (req, res) => {
 
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
   
   // Save new player to the database
-  const player = { username, password: hashedPassword };
+  const player = { username, password };
   await client.db("game_db").collection("players").insertOne(player);
   
   // Generate a token and return it
