@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/register', async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password } = req.body['username', 'password'];
 
   if (!username || !password) {
     return res.status(400).json({ error: 'Username and password are required' });
@@ -57,6 +57,8 @@ app.post('/game', async (req, res) => {
     res.status(401).json({ error: 'Invalid token' });
     return;
   }
+
+  console.log(decoded.username);
 
   const game = {
     gameId: uuidv4(),
