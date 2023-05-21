@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 const uri = process.env.MONGODB_URI;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true});
 
 client.connect(err => {
   if (err) throw err;
@@ -51,7 +51,7 @@ app.post('/game', async (req, res) => {
     gameId: uuidv4(),
     randomNumber: Math.floor(Math.random() * 10000) + 1,
     status: 'active',
-    playerId: decoded.username
+    playerId: username
   };
 
   await client.db("game_db").collection("games").insertOne(game);
