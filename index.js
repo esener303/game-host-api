@@ -26,11 +26,15 @@ const gameSchema = {
 const jwt = require('jsonwebtoken');
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('This site its being left as its is with purpose of testing the game. Call the /register endpoint to create a new user and then /game to create a new game.')
 })
 
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Username and password are required' });
+  }
   
   // Save new player to the database
   const player = { username, password };
