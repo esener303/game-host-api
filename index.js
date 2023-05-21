@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config();
+const port = process.env.PORT || 3000;
 
 const app = express();
 app.use(cors());
@@ -24,6 +25,10 @@ const gameSchema = {
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
@@ -76,3 +81,6 @@ app.post('/guess', async (req, res) => {
   }
 });
 
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
