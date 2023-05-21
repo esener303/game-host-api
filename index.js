@@ -47,11 +47,18 @@ app.post('/game', async (req, res) => {
   const token = req.headers['authorization'];
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+  console.log(decoded);
+
+  if (!decoded || !decoded.username) {
+    res.status(401).json({ error: 'Invalid token' });
+    return;
+  }
+
   const game = {
     gameId: uuidv4(),
     randomNumber: Math.floor(Math.random() * 10000) + 1,
     status: 'active',
-    playerId: username
+    playerId: decoded.username
   };
 
   await client.db("game_db").collection("games").insertOne(game);
