@@ -36,9 +36,10 @@ app.post('/register', async (req, res) => {
   if (!username || !password) {
     return res.status(400).json({ error: 'Username and password are required' });
   }
-  
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   // Save new player to the database
-  const player = { username, password };
+  const player = { username, password: hashedPassword };
   await client.db("game_db").collection("players").insertOne(player);
   
   // Generate a token and return it
@@ -74,7 +75,8 @@ app.post('/game', async (req, res) => {
 });
 
 app.post('/guess', async (req, res) => {
-  const { gameId, guess } = req.body;
+  const gameId = req.body.gameId;
+  const guess = req.body.guess;
   const game = await client.db("game_db").collection("games").findOne({ gameId });
 
   if (!game) {
