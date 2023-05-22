@@ -90,7 +90,7 @@ app.post('/guess', async (req, res) => {
       { gameId: req.body.gameId },
       { $set: { status: 'finished' } }
       );
-    res.send("Equal");
+    res.send("You Got It! GAME OVER");
   } else if (Number(req.body.guess) > game.randomNumber) {
     res.send("Smaller");
   } else {
