@@ -77,7 +77,6 @@ app.post('/game', async (req, res) => {
 });
 
 app.post('/guess', async (req, res) => {
-  const guess = req.body.guess;
   const game = await client.db("game_db").collection("games").findOne({ gameId: req.body.gameId });
 
   if (!game) {
@@ -85,7 +84,7 @@ app.post('/guess', async (req, res) => {
     return;
   }
 
-  if (guess === game.randomNumber) {
+  if ( req.body.guess === game.randomNumber) {
     game.status = 'finished';
     await client.db("game_db").collection("games").updateOne({ gameId }, game);
     res.send("Equal");
