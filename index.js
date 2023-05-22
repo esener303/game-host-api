@@ -29,6 +29,8 @@ app.get('/', (req, res) => {
   res.send('This site its being left as its is with purpose of testing the game. Call the /register endpoint to create a new user and then /game to create a new game.')
 })
 
+const bcrypt = require('bcrypt');
+
 app.post('/register', async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
