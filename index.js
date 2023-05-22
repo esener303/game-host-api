@@ -77,9 +77,8 @@ app.post('/game', async (req, res) => {
 });
 
 app.post('/guess', async (req, res) => {
-  const gameId = req.body.gameId;
   const guess = req.body.guess;
-  const game = await client.db("game_db").collection("games").findOne({ gameId });
+  const game = await client.db("game_db").collection("games").findOne({ gameId: req.body.gameId });
 
   if (!game) {
     res.status(404).send("Game not found");
