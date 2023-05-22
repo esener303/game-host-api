@@ -88,7 +88,7 @@ app.post('/guess', async (req, res) => {
     game.status = 'finished';
     await client.db("game_db").collection("games").updateOne({ gameId }, game);
     res.send("Equal");
-  } else if (guess > game.randomNumber) {
+  } else if (req.body.guess > game.randomNumber) {
     res.send("Smaller");
   } else {
     res.send("Larger");
